@@ -1,0 +1,174 @@
+[
+    {
+        "rule": "no-widening-return-type",
+        "name": "a bare return is undefined the body can produce",
+        "code": "\ntype Identity = { id: string };\ndeclare const make: () => Identity;\n\nexport function pick(flag: boolean): Identity | undefined {\n\tif (!flag) {\n\t\treturn;\n\t}\n\n\treturn make();\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a path off the end of the block returns undefined too",
+        "code": "\ntype Identity = { id: string };\ndeclare const make: () => Identity;\n\nexport function pick(flag: boolean): Identity | undefined {\n\tif (flag) {\n\t\treturn make();\n\t}\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a branch that throws still leaves no path off the end",
+        "code": "\ntype Identity = { id: string };\ndeclare const make: () => Identity;\n\nexport function pick(flag: boolean): Identity | undefined {\n\tif (flag) {\n\t\treturn make();\n\t} else {\n\t\tthrow new Error(\"no\");\n\t}\n}\n",
+        "expect": [
+            "no-widening-return-type@4"
+        ],
+        "messages": [
+            "wider than"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "boolean declared over a body that only returns true",
+        "code": "\nexport function supported(): boolean {\n\treturn true;\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ],
+        "messages": [
+            "`boolean` is wider than the `true`"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "string declared over a finite union of literals",
+        "code": "\nexport function bucket(size: number): string {\n\tif (size <= 8) {\n\t\treturn \"small\";\n\t}\n\n\treturn \"large\";\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ],
+        "messages": [
+            "wider than the `\"large\" | \"small\"`"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "unknown declared over a string",
+        "code": "\nexport function label(value: string): unknown {\n\treturn value;\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ],
+        "messages": [
+            "`unknown` is wider than the `string`"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a readonly view over a mutable array",
+        "code": "\nexport function rows(): readonly string[] {\n\treturn [\"a\"];\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "the annotation matches what the body returns",
+        "code": "\nexport function name(): string {\n\treturn String(Date.now());\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "the annotation is narrower than the body",
+        "code": "\nexport function first(values: string[]): string {\n\treturn values[0] as string;\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a locally declared type pins a contract",
+        "code": "\ninterface Cookie {\n\tname: string;\n\tsecure: boolean;\n}\n\nexport function session(): Cookie {\n\treturn { name: \"sid\", secure: true };\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "the contracts option can be turned off",
+        "code": "\ninterface Cookie {\n\tname: string;\n\tsecure: boolean;\n}\n\nexport function session(): Cookie {\n\treturn { name: \"sid\", secure: true };\n}\n",
+        "options": {
+            "contracts": false
+        },
+        "expect": [
+            "no-widening-return-type@6"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a type predicate says more than the body",
+        "code": "\nexport function isText(value: unknown): value is string {\n\treturn typeof value === \"string\";\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "an async function is compared past the promise",
+        "code": "\nexport async function supported(): Promise<boolean> {\n\treturn true;\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ],
+        "messages": [
+            "`boolean` is wider than the `true`"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a body with no return statement",
+        "code": "\nexport function shout(value: string): void {\n\tconsole.log(value);\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a nested function keeps its own annotation",
+        "code": "\nexport function outer(): string {\n\tconst inner = (): boolean => true;\n\n\treturn String(inner());\n}\n",
+        "expect": [
+            "no-widening-return-type@2"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a named type on both sides still loses something",
+        "code": "\nexport function seen(): ReadonlySet<string> {\n\treturn new Set([\"a\"]);\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ],
+        "messages": [
+            "`ReadonlySet<string>` is wider than the `Set<string>`"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a mapped contract wrapping an object literal",
+        "code": "\ninterface Cookie {\n\tname: string;\n\tsecure: boolean;\n}\n\nexport function session(): Cookie {\n\treturn Object.freeze({ name: \"sid\", secure: true });\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a spelled-out shape is not a named contract",
+        "code": "\nexport function session(): { name: string; secure: boolean } {\n\treturn { name: \"sid\", secure: true };\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "an ambient global the tsconfig names, declared in another file",
+        "files": {
+            "tsconfig.json": "{\"compilerOptions\":{\"strict\":true}}",
+            "global.d.ts": "declare const FLAG: boolean;"
+        },
+        "code": "\nexport function flag(): boolean | undefined {\n\treturn FLAG;\n}\n",
+        "expect": [
+            "no-widening-return-type@1"
+        ]
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "a ternary between two named-contract shapes still narrows",
+        "code": "\ninterface Cookie {\n\tname: string;\n\tsecure: boolean;\n}\n\nexport function session(admin: boolean): Cookie {\n\tconst root = { name: \"root\", secure: true, level: 1 };\n\tconst guest = { name: \"guest\", secure: false, guest: true };\n\treturn admin ? root : guest;\n}\n",
+        "expect": [
+            "no-widening-return-type@6"
+        ],
+        "messages": [
+            "wider than"
+        ]
+    }
+]
