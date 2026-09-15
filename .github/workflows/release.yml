@@ -13,6 +13,10 @@ on:
         type: string
         required: true
         description: must equal the VERSION file, without leading `v`
+      publish:
+        type: boolean
+        default: false
+        description: publish to npm; when false the packed tarballs are uploaded as an artifact instead
   release:
     types: [published]
 
@@ -109,10 +113,28 @@ jobs:
           TSGOLINT_VERSION: ${{ inputs.version || '' }}
         run: node ./tools/gen-npm-packages.mjs
 
+      - name: Pack
+        run: |
+          mkdir -p tarballs
+          for package in npm/*; do
+            (cd "$package" && pnpm pack --pack-destination "$GITHUB_WORKSPACE/tarballs")
+          done
+          ls -l tarballs
+
+      # A dispatch without `publish` only hands over the tarballs, for a
+      # release published by hand
+      - name: Upload tarballs
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          if-no-files-found: error
+          name: npm-tarballs
+          path: tarballs/*.tgz
+
       # the trusted publisher grants "npm stage publish", so this uploads for
       # review rather than going live. approve it with pnpm stage approve.
       # provenance is attached automatically when publishing over oidc
       - name: Publish
+        if: github.event_name == 'release' || inputs.publish
         run: |
           for package in npm/*; do
             pushd "$package"
