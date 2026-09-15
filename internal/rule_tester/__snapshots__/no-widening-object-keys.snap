@@ -1,0 +1,63 @@
+
+[TestPluginCases/a_computed_access_names_the_method_too/invalid-0 - 1]
+Diagnostic 1: widenedKeys (2:22 - 2:43)
+Message: `Object.keys` is typed as if every key were a `string`, so the `{ off: number; warn: number; }` keys are lost. Call `typedKeys`, which infers them from what it is given. One cast stays inside that helper, so it concentrates the unsoundness rather than removing it.
+   1 | const levels = { off: 0, warn: 1 };
+   2 | export const names = Object["keys"](levels);
+     |                      ~~~~~~~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/a_computed_method_name_above_the_call_is_not_the_helper/invalid-0 - 1]
+Diagnostic 1: widenedKeys (5:10 - 5:28)
+Message: `Object.keys` is typed as if every key were a `string`, so the `{ off: number; warn: number; }` keys are lost. Call `typedKeys`, which infers them from what it is given. One cast stays inside that helper, so it concentrates the unsoundness rather than removing it.
+   4 |     [key]() {
+   5 |         return Object.keys(levels);
+     |                ~~~~~~~~~~~~~~~~~~~
+   6 |     }
+---
+
+[TestPluginCases/a_destructured_declaration_above_the_call_is_not_the_helper/invalid-0 - 1]
+Diagnostic 1: widenedKeys (2:35 - 2:53)
+Message: `Object.keys` is typed as if every key were a `string`, so the `{ off: number; warn: number; }` keys are lost. Call `typedKeys`, which infers them from what it is given. One cast stays inside that helper, so it concentrates the unsoundness rather than removing it.
+   1 | const levels = { off: 0, warn: 1 };
+   2 | export const { names } = { names: Object.keys(levels) };
+     |                                   ~~~~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/a_mapped_result_still_reads_the_keys/invalid-0 - 1]
+Diagnostic 1: widenedKeys (2:22 - 2:40)
+Message: `Object.keys` is typed as if every key were a `string`, so the `{ off: number; warn: number; }` keys are lost. Call `typedKeys`, which infers them from what it is given. One cast stays inside that helper, so it concentrates the unsoundness rather than removing it.
+   1 | const levels = { off: 0, warn: 1 };
+   2 | export const upper = Object.keys(levels).map((key) => key.toUpperCase());
+     |                      ~~~~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/entries_loses_it_in_the_first_position/invalid-0 - 1]
+Diagnostic 1: widenedKeys (2:22 - 2:43)
+Message: `Object.entries` is typed as if every key were a `string`, so the `{ off: number; warn: number; }` keys are lost. Call `typedEntries`, which infers them from what it is given. One cast stays inside that helper, so it concentrates the unsoundness rather than removing it.
+   1 | const levels = { off: 0, warn: 1 };
+   2 | export const pairs = Object.entries(levels);
+     |                      ~~~~~~~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/keys_loses_the_key_union/invalid-0 - 1]
+Diagnostic 1: widenedKeys (2:22 - 2:40)
+Message: `Object.keys` is typed as if every key were a `string`, so the `{ off: number; warn: number; }` keys are lost. Call `typedKeys`, which infers them from what it is given. One cast stays inside that helper, so it concentrates the unsoundness rather than removing it.
+   1 | const levels = { off: 0, warn: 1 };
+   2 | export const names = Object.keys(levels);
+     |                      ~~~~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/the_helper_names_come_from_the_options/invalid-0 - 1]
+Diagnostic 1: widenedKeys (2:22 - 2:40)
+Message: `Object.keys` is typed as if every key were a `string`, so the `{ off: number; warn: number; }` keys are lost. Call `objectKeysFrom`, which infers them from what it is given. One cast stays inside that helper, so it concentrates the unsoundness rather than removing it.
+   1 | const levels = { off: 0, warn: 1 };
+   2 | export const names = Object.keys(levels);
+     |                      ~~~~~~~~~~~~~~~~~~~
+   3 | 
+---
