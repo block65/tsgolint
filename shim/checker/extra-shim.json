@@ -52,7 +52,9 @@
       "IsNullableType",
       "getIndexInfosOfType",
       "isReadonlySymbol",
-      "getContextFreeTypeOfExpression"
+      "getContextFreeTypeOfExpression",
+      "getUnionType",
+      "getStringLiteralType"
     ]
   },
   "ExtraFields": {
@@ -76,7 +78,8 @@
       "numberType",
       "stringType",
       "booleanType",
-      "globalRegExpType"
+      "globalRegExpType",
+      "undefinedType"
     ],
     "InterfaceType": [
       "thisType"
