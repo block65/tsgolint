@@ -1,0 +1,100 @@
+
+[TestPluginCases/a_branch_that_throws_still_leaves_no_path_off_the_end/invalid-0 - 1]
+Diagnostic 1: widenedReturn (4:38 - 4:57)
+Message: Return type `Identity | undefined` is wider than the `Identity` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   3 | 
+   4 | export function pick(flag: boolean): Identity | undefined {
+     |                                      ~~~~~~~~~~~~~~~~~~~~
+   5 |     if (flag) {
+---
+
+[TestPluginCases/a_named_type_on_both_sides_still_loses_something/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:25 - 1:43)
+Message: Return type `ReadonlySet<string>` is wider than the `Set<string>` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function seen(): ReadonlySet<string> {
+     |                         ~~~~~~~~~~~~~~~~~~~
+   2 |     return new Set(["a"]);
+---
+
+[TestPluginCases/a_nested_function_keeps_its_own_annotation/invalid-0 - 1]
+Diagnostic 1: widenedReturn (2:20 - 2:26)
+Message: Return type `boolean` is wider than the `true` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function outer(): string {
+   2 |     const inner = (): boolean => true;
+     |                       ~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/a_readonly_view_over_a_mutable_array/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:25 - 1:41)
+Message: Return type `readonly string[]` is wider than the `string[]` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function rows(): readonly string[] {
+     |                         ~~~~~~~~~~~~~~~~~
+   2 |     return ["a"];
+---
+
+[TestPluginCases/a_spelled-out_shape_is_not_a_named_contract/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:28 - 1:60)
+Message: Return type `{ name: string; secure: boolean; }` is wider than the `{ name: string; secure: true; }` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function session(): { name: string; secure: boolean } {
+     |                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   2 |     return { name: "sid", secure: true };
+---
+
+[TestPluginCases/a_ternary_between_two_named-contract_shapes_still_narrows/invalid-0 - 1]
+Diagnostic 1: widenedReturn (6:42 - 6:47)
+Message: Return type `Cookie` is wider than the `{ name: string; secure: boolean; level: number; } | { name: string; secure: boolean; guest: boolean; }` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   5 | 
+   6 | export function session(admin: boolean): Cookie {
+     |                                          ~~~~~~
+   7 |     const root = { name: "root", secure: true, level: 1 };
+---
+
+[TestPluginCases/an_ambient_global_the_tsconfig_names,_declared_in_another_file/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:25 - 1:43)
+Message: Return type `boolean | undefined` is wider than the `boolean` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function flag(): boolean | undefined {
+     |                         ~~~~~~~~~~~~~~~~~~~
+   2 |     return FLAG;
+---
+
+[TestPluginCases/an_async_function_is_compared_past_the_promise/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:36 - 1:51)
+Message: Return type `boolean` is wider than the `true` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export async function supported(): Promise<boolean> {
+     |                                    ~~~~~~~~~~~~~~~~
+   2 |     return true;
+---
+
+[TestPluginCases/boolean_declared_over_a_body_that_only_returns_true/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:30 - 1:36)
+Message: Return type `boolean` is wider than the `true` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function supported(): boolean {
+     |                              ~~~~~~~
+   2 |     return true;
+---
+
+[TestPluginCases/string_declared_over_a_finite_union_of_literals/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:39 - 1:44)
+Message: Return type `string` is wider than the `"large" | "small"` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function bucket(size: number): string {
+     |                                       ~~~~~~
+   2 |     if (size <= 8) {
+---
+
+[TestPluginCases/the_contracts_option_can_be_turned_off/invalid-0 - 1]
+Diagnostic 1: widenedReturn (6:28 - 6:33)
+Message: Return type `Cookie` is wider than the `{ name: string; secure: true; }` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   5 | 
+   6 | export function session(): Cookie {
+     |                            ~~~~~~
+   7 |     return { name: "sid", secure: true };
+---
+
+[TestPluginCases/unknown_declared_over_a_string/invalid-0 - 1]
+Diagnostic 1: widenedReturn (1:39 - 1:45)
+Message: Return type `unknown` is wider than the `string` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.
+   1 | export function label(value: string): unknown {
+     |                                       ~~~~~~~
+   2 |     return value;
+---
