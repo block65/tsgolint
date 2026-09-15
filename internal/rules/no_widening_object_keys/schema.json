@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "no_widening_object_keys_options": {
+      "type": "object",
+      "properties": {
+        "keys": { "type": "string", "default": "typedKeys" },
+        "entries": { "type": "string", "default": "typedEntries" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
