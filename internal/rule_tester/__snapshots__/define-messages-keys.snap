@@ -1,0 +1,128 @@
+
+[TestPluginCases/broad_imported_alias/invalid-0 - 1]
+Diagnostic 1: finiteKeys (3:40 - 3:43)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   2 | import type { Keys } from "./keys.ts";
+   3 | export const messages = defineMessages<Keys>({});
+     |                                        ~~~~
+---
+
+[TestPluginCases/missing_type/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:25 - 2:42)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages({});
+     |                         ~~~~~~~~~~~~~~~~~~
+---
+
+[TestPluginCases/namespace_import/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:23 - 2:45)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import * as intl from "react-intl";
+   2 | export const result = intl.defineMessages({});
+     |                       ~~~~~~~~~~~~~~~~~~~~~~~
+---
+
+[TestPluginCases/reject_"one"_|_number/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:53)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<"one" | number>({});
+     |                                        ~~~~~~~~~~~~~~
+---
+
+[TestPluginCases/reject_"one"_|_undefined/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:56)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<"one" | undefined>({});
+     |                                        ~~~~~~~~~~~~~~~~~
+---
+
+[TestPluginCases/reject_1_|_2/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:44)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<1 | 2>({});
+     |                                        ~~~~~
+---
+
+[TestPluginCases/reject_MissingType/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:50)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<MissingType>({});
+     |                                        ~~~~~~~~~~~
+---
+
+[TestPluginCases/reject_Record<"one",_string>/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:60)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<Record<"one", string>>({});
+     |                                        ~~~~~~~~~~~~~~~~~~~~~
+---
+
+[TestPluginCases/reject_`key-${string}`/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:54)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<`key-${string}`>({});
+     |                                        ~~~~~~~~~~~~~~~
+---
+
+[TestPluginCases/reject_any/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:42)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<any>({});
+     |                                        ~~~
+---
+
+[TestPluginCases/reject_never/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:44)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<never>({});
+     |                                        ~~~~~
+---
+
+[TestPluginCases/reject_number/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:45)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<number>({});
+     |                                        ~~~~~~
+---
+
+[TestPluginCases/reject_string/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:45)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<string>({});
+     |                                        ~~~~~~
+---
+
+[TestPluginCases/reject_unknown/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:40 - 2:46)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export const messages = defineMessages<unknown>({});
+     |                                        ~~~~~~~
+---
+
+[TestPluginCases/renamed_import/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:23 - 2:34)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages as messages } from "react-intl";
+   2 | export const result = messages({});
+     |                       ~~~~~~~~~~~~
+---
+
+[TestPluginCases/unconstrained_generic/invalid-0 - 1]
+Diagnostic 1: finiteKeys (2:50 - 2:50)
+Message: Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.
+   1 | import { defineMessages } from "react-intl";
+   2 | export function run<T>() { return defineMessages<T>({}); }
+     |                                                  ~
+---
