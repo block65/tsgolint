@@ -129,8 +129,12 @@ func Checker_isArrayType(recv *checker.Checker, t *checker.Type) bool
 func Checker_isArrayOrTupleType(recv *checker.Checker, t *checker.Type) bool
 //go:linkname Checker_getDeclaredTypeOfSymbol github.com/microsoft/typescript-go/internal/checker.(*Checker).getDeclaredTypeOfSymbol
 func Checker_getDeclaredTypeOfSymbol(recv *checker.Checker, symbol *ast.Symbol) *checker.Type
+//go:linkname Checker_getStringLiteralType github.com/microsoft/typescript-go/internal/checker.(*Checker).getStringLiteralType
+func Checker_getStringLiteralType(recv *checker.Checker, value string) *checker.Type
 //go:linkname Checker_getBaseTypeOfLiteralType github.com/microsoft/typescript-go/internal/checker.(*Checker).getBaseTypeOfLiteralType
 func Checker_getBaseTypeOfLiteralType(recv *checker.Checker, t *checker.Type) *checker.Type
+//go:linkname Checker_getUnionType github.com/microsoft/typescript-go/internal/checker.(*Checker).getUnionType
+func Checker_getUnionType(recv *checker.Checker, types []*checker.Type) *checker.Type
 //go:linkname Checker_getBaseConstraintOfType github.com/microsoft/typescript-go/internal/checker.(*Checker).getBaseConstraintOfType
 func Checker_getBaseConstraintOfType(recv *checker.Checker, t *checker.Type) *checker.Type
 //go:linkname Checker_getContextualType github.com/microsoft/typescript-go/internal/checker.(*Checker).getContextualType
@@ -481,6 +485,9 @@ func Checker_booleanType(v *checker.Checker) *checker.Type {
 }
 func Checker_globalRegExpType(v *checker.Checker) *checker.Type {
   return ((*extra_Checker)(unsafe.Pointer(v))).globalRegExpType
+}
+func Checker_undefinedType(v *checker.Checker) *checker.Type {
+  return ((*extra_Checker)(unsafe.Pointer(v))).undefinedType
 }
 //go:linkname CompareTypes github.com/microsoft/typescript-go/internal/checker.CompareTypes
 func CompareTypes(t1 *checker.Type, t2 *checker.Type) int
