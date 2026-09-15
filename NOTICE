@@ -1,0 +1,12 @@
+Block65 patched build of tsgolint 7.0.2001
+==========================================
+
+This package is built from https://github.com/block65/tsgolint, branch
+block65/v7.0.2001, a fork of https://github.com/oxc-project/tsgolint at tag
+v7.0.2001. The upstream LICENSE and copyright apply unchanged. The fork adds,
+on top of the upstream tag: the checker shim exposes getUnionType,
+getStringLiteralType and undefinedType; four rules are added under
+internal/rules and registered in cmd/tsgolint (define-messages-keys,
+no-widening-alias, no-widening-object-keys, no-widening-return-type), ported
+from the block65 oxlint plugin; and CI is reduced to a release workflow. It is
+maintained by Block65 and is not affiliated with or endorsed by the oxc project.
