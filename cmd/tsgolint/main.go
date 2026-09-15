@@ -4,6 +4,10 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"github.com/typescript-eslint/tsgolint/internal/rules/define_messages_keys"
+	"github.com/typescript-eslint/tsgolint/internal/rules/no_widening_alias"
+	"github.com/typescript-eslint/tsgolint/internal/rules/no_widening_object_keys"
+	"github.com/typescript-eslint/tsgolint/internal/rules/no_widening_return_type"
 	"math"
 	"os"
 	"runtime"
@@ -160,6 +164,10 @@ func setupProfiling(opts *headlessOptions) (func(), error) {
 }
 
 var allRules = []rule.Rule{
+	no_widening_return_type.NoWideningReturnTypeRule,
+	no_widening_alias.NoWideningAliasRule,
+	no_widening_object_keys.NoWideningObjectKeysRule,
+	define_messages_keys.DefineMessagesKeysRule,
 	await_thenable.AwaitThenableRule,
 	consistent_return.ConsistentReturnRule,
 	consistent_type_exports.ConsistentTypeExportsRule,
