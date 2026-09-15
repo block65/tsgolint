@@ -27,11 +27,10 @@ const GOARCH2PROCESS_ARCH = {
   arm64: 'arm64',
 };
 
-// Only the platforms Block65 uses; extend the release workflow matrix alongside
+// Linux only, the platforms Block65 runs; extend the release workflow matrix alongside
 const BUILT = [
   ['linux', 'amd64'],
   ['linux', 'arm64'],
-  ['darwin', 'arm64'],
 ];
 
 const binariesMatrix = BUILT.map(([goos, goarch]) => {

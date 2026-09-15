@@ -33,6 +33,7 @@ overrides:
 
 The package keeps upstream's layout and the `tsgolint` bin name, so
 `oxlint --type-aware` finds it exactly as it finds the upstream package.
+Supported platforms: Linux x64 and Linux arm64 only.
 
 ## Documentation
 
