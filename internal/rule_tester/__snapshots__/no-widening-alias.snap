@@ -1,0 +1,82 @@
+
+[TestPluginCases/a_function_type_keeps_its_return_union_intact_in_the_message/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:14 - 2:17)
+Message: Annotation `(s: string) => string` widens `choose` from `(s: string) => "a" | "b"`. Drop the annotation to keep the inferred type.
+   1 | declare function choose(s: string): "a" | "b";
+   2 | export const pick: (s: string) => string = choose;
+     |              ~~~~
+   3 | 
+---
+
+[TestPluginCases/a_numeric_index_signature/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:13)
+Message: Annotation `Record<number, { id: number }>` widens `rows` from `{ 0: { id: number; }; }`. Drop the annotation to keep the inferred type. It accepts keys the original type does not declare, so narrow the key where it comes in, with a guard or a parse, rather than widening the table.
+   1 | const rows = { 0: { id: 1 } };
+   2 | const byIndex: Record<number, { id: number }> = rows;
+     |       ~~~~~~~
+---
+
+[TestPluginCases/a_record_alias_widening_a_literal-keyed_table/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:12)
+Message: Annotation `Record<string, { id: string }>` widens `messages` from `{ state: { id: string; }; }`. Drop the annotation to keep the inferred type. It accepts keys the original type does not declare, so narrow the key where it comes in, with a guard or a parse, rather than widening the table.
+   1 | const messages = { state: { id: "state" } };
+   2 | const byCode: Record<string, { id: string }> = messages;
+     |       ~~~~~~
+---
+
+[TestPluginCases/a_string_index_signature_widens_a_known_table/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:12)
+Message: Annotation `{ [key: string]: object }` widens `messages` from `{ state: {}; }`. Drop the annotation to keep the inferred type. It accepts keys the original type does not declare, so narrow the key where it comes in, with a guard or a parse, rather than widening the table.
+   1 | const messages = { state: {} };
+   2 | const byCode: { [key: string]: object } = messages;
+     |       ~~~~~~
+---
+
+[TestPluginCases/imported_named_type_and_value/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:11)
+Message: Annotation `Wide` widens `source` from `{ known: boolean; }`. Drop the annotation to keep the inferred type. It accepts keys the original type does not declare, so narrow the key where it comes in, with a guard or a parse, rather than widening the table.
+   1 | import { source, type Wide } from "./source";
+   2 | const alias: Wide = source;
+     |       ~~~~~
+---
+
+[TestPluginCases/literal_value_information_is_lost/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:11)
+Message: Annotation `string` widens `source` from `"done" | "ready"`. Drop the annotation to keep the inferred type.
+   1 | declare const source: "ready" | "done";
+   2 | const alias: string = source;
+     |       ~~~~~
+---
+
+[TestPluginCases/named_alias_of_an_optional-key_mapped_type_adds_keys_despite_mutual_assignability/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:11)
+Message: Annotation `Wide` widens `source` from `{ known?: boolean | undefined; }`. Drop the annotation to keep the inferred type. It accepts keys the original type does not declare, so narrow the key where it comes in, with a guard or a parse, rather than widening the table.
+   1 | type Wide = Partial<Record<"known" | "extra", boolean>>; declare const source: { known?: boolean };
+   2 | const alias: Wide = source;
+     |       ~~~~~
+---
+
+[TestPluginCases/property_access_with_nested_parentheses/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:11)
+Message: Annotation `{ state: string }` widens `((container.entry))` from `{ state: "ready"; }`. Drop the annotation to keep the inferred type.
+   1 | const container = { entry: { state: "ready" as const } };
+   2 | const alias: { state: string } = ((container.entry));
+     |       ~~~~~
+---
+
+[TestPluginCases/the_GroupRules_indexed_alias/invalid-0 - 1]
+Diagnostic 1: widenedAlias (4:8 - 4:12)
+Message: Annotation `GroupRules` widens `groups[name]` from `{ readonly one: "warn"; } | { readonly two: "error"; }`. Drop the annotation to keep the inferred type.
+   3 | function select(name: keyof typeof groups) {
+   4 |  const group: GroupRules = groups[name];
+     |        ~~~~~
+   5 |  return group;
+---
+
+[TestPluginCases/unknown_erases_an_otherwise_known_type/invalid-0 - 1]
+Diagnostic 1: widenedAlias (2:7 - 2:11)
+Message: Annotation `unknown` widens `source` from `{ known: boolean; }`. Drop the annotation to keep the inferred type.
+   1 | declare const source: { known: boolean };
+   2 | const alias: unknown = source;
+     |       ~~~~~
+---
