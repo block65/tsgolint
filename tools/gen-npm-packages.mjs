@@ -8,7 +8,7 @@ import process from 'node:process';
 
 const npmPackageVersion = requiredEnvVar('TSGOLINT_VERSION');
 
-const NPM_ORG = `oxlint-tsgolint`;
+const MAIN_PACKAGE = '@block65/oxlint-tsgolint';
 
 const GOOS2PROCESS_PLATFORM = {
   windows: 'win32',
@@ -28,18 +28,19 @@ const binariesMatrix = Object.entries(GOOS2PROCESS_PLATFORM).flatMap(
       arch,
       platform,
       artifactName: `tsgolint-${goos}-${goarch}`,
-      npmPackageName: `@${NPM_ORG}/${platform}-${arch}`,
+      npmPackageName: `${MAIN_PACKAGE}-${platform}-${arch}`,
     })),
 );
 
 const commonPackageJson = {
   version: npmPackageVersion,
-  description: 'High-performance type-aware TypeScript linter powered by typescript-go, for use with oxlint.',
+  description:
+    'Block65 patched build of tsgolint 7.0.2001 (oxc-project/tsgolint) adding four type-aware rules, for use with @block65/oxlint. Not the oxc project.',
   license: 'MIT',
   author: 'auvred <aauvred@gmail.com>',
-  repository: 'github:oxc-project/tsgolint',
-  bugs: 'https://github.com/oxc-project/tsgolint/issues',
-  homepage: 'https://github.com/oxc-project/tsgolint#readme',
+  repository: 'github:block65/tsgolint',
+  bugs: 'https://github.com/block65/tsgolint/issues',
+  homepage: 'https://github.com/block65/tsgolint#readme',
   publishConfig: {
     access: 'public',
   },
@@ -49,6 +50,7 @@ const repoRoot = path.join(import.meta.dirname, '..');
 
 const npmDir = path.join(repoRoot, 'npm');
 const licensePath = path.join(repoRoot, 'LICENSE');
+const noticePath = path.join(repoRoot, 'NOTICE');
 const readmePath = path.join(repoRoot, 'README.md');
 const buildDir = path.join(repoRoot, 'build');
 
@@ -73,7 +75,7 @@ await Promise.all([
               },
               name: npmPackageName,
               preferUnplugged: true,
-              files: [binaryName],
+              files: [binaryName, 'NOTICE'],
               os: [platform],
               cpu: [arch],
             },
@@ -82,6 +84,7 @@ await Promise.all([
           ),
         ),
         fs.copyFile(licensePath, path.join(packageDir, 'LICENSE')),
+        fs.copyFile(noticePath, path.join(packageDir, 'NOTICE')),
         fs.copyFile(
           path.join(buildDir, artifactName, 'tsgolint'),
           path.join(packageDir, binaryName),
@@ -97,7 +100,7 @@ await Promise.all([
         JSON.stringify(
           {
             ...commonPackageJson,
-            name: 'oxlint-tsgolint',
+            name: MAIN_PACKAGE,
             bin: {
               tsgolint: './bin/tsgolint.js',
             },
@@ -113,6 +116,7 @@ await Promise.all([
         ),
       ),
       fs.copyFile(licensePath, path.join(packageDir, 'LICENSE')),
+      fs.copyFile(noticePath, path.join(packageDir, 'NOTICE')),
       fs.copyFile(readmePath, path.join(packageDir, 'README.md')),
     ]);
   })(),
