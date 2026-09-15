@@ -1,3 +1,11 @@
+> **Block65 patched build.** This is [block65/tsgolint](https://github.com/block65/tsgolint),
+> a fork of [oxc-project/tsgolint](https://github.com/oxc-project/tsgolint) at v7.0.2001
+> that adds four type-aware rules (`define-messages-keys`, `no-widening-alias`,
+> `no-widening-object-keys`, `no-widening-return-type`) for use with the matching
+> [`@block65/oxlint`](https://github.com/block65/oxc). It is published as
+> `@block65/oxlint-tsgolint` and is not the oxc project. See `NOTICE` for the
+> patch set; everything below is the upstream README.
+
 <div align="center">
   <h1>✨ tsgolint ✨</h1>
 </div>
