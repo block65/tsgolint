@@ -1,0 +1,207 @@
+[
+  {
+    "rule": "no-widening-alias",
+    "name": "a function type keeps its return union intact in the message",
+    "code": "\ndeclare function choose(s: string): \"a\" | \"b\";\nexport const pick: (s: string) => string = choose;\n",
+    "expect": [
+      "no-widening-alias@2"
+    ],
+    "messages": [
+      "widens `choose` from `(s: string) => \"a\" | \"b\"`"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "a record alias widening a literal-keyed table",
+    "code": "const messages = { state: { id: \"state\" } };\nconst byCode: Record<string, { id: string }> = messages;",
+    "expect": [
+      "no-widening-alias@2"
+    ],
+    "messages": [
+      "accepts keys",
+      "Drop the annotation"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "a string index signature widens a known table",
+    "code": "const messages = { state: {} };\nconst byCode: { [key: string]: object } = messages;",
+    "expect": [
+      "no-widening-alias@2"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "a numeric index signature",
+    "code": "const rows = { 0: { id: 1 } };\nconst byIndex: Record<number, { id: number }> = rows;",
+    "expect": [
+      "no-widening-alias@2"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "the GroupRules indexed alias",
+    "code": "type GroupRules = Partial<Record<\"one\" | \"two\", \"warn\" | \"error\">>;\nconst groups = { first: { one: \"warn\" }, second: { two: \"error\" } } as const;\nfunction select(name: keyof typeof groups) {\n const group: GroupRules = groups[name];\n return group;\n}",
+    "expect": [
+      "no-widening-alias@4"
+    ],
+    "messages": [
+      "GroupRules",
+      "groups[name]"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "named alias of an optional-key mapped type adds keys despite mutual assignability",
+    "code": "type Wide = Partial<Record<\"known\" | \"extra\", boolean>>; declare const source: { known?: boolean };\nconst alias: Wide = source;",
+    "expect": [
+      "no-widening-alias@2"
+    ],
+    "messages": [
+      "accepts keys"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "property access with nested parentheses",
+    "code": "const container = { entry: { state: \"ready\" as const } };\nconst alias: { state: string } = ((container.entry));",
+    "expect": [
+      "no-widening-alias@2"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "literal value information is lost",
+    "code": "declare const source: \"ready\" | \"done\";\nconst alias: string = source;",
+    "expect": [
+      "no-widening-alias@2"
+    ],
+    "messages": [
+      "widens `source` from `\"done\" | \"ready\"`"
+    ],
+    "notMessages": [
+      "accepts keys"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "unknown erases an otherwise known type",
+    "code": "declare const source: { known: boolean };\nconst alias: unknown = source;",
+    "expect": [
+      "no-widening-alias@2"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "imported named type and value",
+    "code": "import { source, type Wide } from \"./source\";\nconst alias: Wide = source;",
+    "files": {
+      "source.ts": "export type Wide = Partial<Record<\"known\" | \"extra\", boolean>>; export const source = { known: true };"
+    },
+    "expect": [
+      "no-widening-alias@2"
+    ]
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "equivalent named annotation",
+    "code": "type Same = { known: boolean }; declare const source: Same; const alias: Same = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "equivalent dictionary annotation",
+    "code": "declare const source: Record<string, number>; const alias: Record<string, number> = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "narrowing removes possible keys",
+    "code": "declare const source: { known?: boolean; extra?: boolean }; const alias: { known?: boolean } = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "dictionary narrows to optional keys",
+    "code": "declare const source: Record<string, boolean>; const alias: { known?: boolean } = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "fresh object declares its contract",
+    "code": "const table: Record<string, number> = { known: 1 };",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "fresh literal declares its contract",
+    "code": "const value: string = \"ready\";",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "call can be contextually typed",
+    "code": "declare function make<T>(): T; const value: { known: boolean } = make();",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "mutable binding can receive more values",
+    "code": "declare const source: \"ready\"; let value: string = source; value = \"done\";",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "var binding can receive more values",
+    "code": "declare const source: \"ready\"; var value: string = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "unresolved initializer is not evidence",
+    "code": "const alias: Record<string, number> = missing;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "unresolved annotation is not evidence",
+    "code": "const source = { known: true }; const alias: Missing = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "any initializer is not evidence",
+    "code": "declare const source: any; const alias: Record<string, number> = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "never initializer is not evidence",
+    "code": "declare const source: never; const alias: string = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "incompatible annotation belongs to TypeScript",
+    "code": "declare const source: string; const alias: number = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "generic type parameter is unresolved",
+    "code": "function example<T>(source: T) { const alias: unknown = source; return alias; }",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "unannotated alias preserves inference",
+    "code": "const source = { known: true }; const alias = source;",
+    "expect": []
+  },
+  {
+    "rule": "no-widening-alias",
+    "name": "satisfies checks without widening",
+    "code": "const source = { known: true }; const alias = source satisfies Record<string, boolean>;",
+    "expect": []
+  }
+]
