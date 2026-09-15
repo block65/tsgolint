@@ -1,0 +1,190 @@
+[
+  {
+    "rule": "define-messages-keys",
+    "name": "missing type",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject string",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<string>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject any",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<any>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject unknown",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<unknown>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject never",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<never>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject number",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<number>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject 1 | 2",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<1 | 2>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject \"one\" | number",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<\"one\" | number>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject \"one\" | undefined",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<\"one\" | undefined>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject MissingType",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<MissingType>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject Record<\"one\", string>",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<Record<\"one\", string>>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject `key-${string}`",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<`key-${string}`>({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "accept \"one\"",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<\"one\">({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "accept \"one\" | \"two\"",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<\"one\" | \"two\">({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "accept Extract<\"one\" | 2, string>",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<Extract<\"one\" | 2, string>>({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "accept `key-${\"one\" | \"two\"}`",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<`key-${\"one\" | \"two\"}`>({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "local alias",
+    "code": "import { defineMessages } from \"react-intl\";\ntype Keys = \"one\" | \"two\";\nexport const messages = defineMessages<Keys>({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "as const values",
+    "code": "import { defineMessages } from \"react-intl\";\nconst Keys = { One: \"one\", Two: \"two\" } as const;\ntype Key = typeof Keys[keyof typeof Keys];\nexport const messages = defineMessages<Key>({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "imported alias",
+    "code": "import { defineMessages } from \"react-intl\";\nimport type { Keys } from \"./keys.ts\";\nexport const messages = defineMessages<Keys>({});",
+    "files": {
+      "keys.ts": "export type Keys = \"one\" | \"two\";"
+    },
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "broad imported alias",
+    "code": "import { defineMessages } from \"react-intl\";\nimport type { Keys } from \"./keys.ts\";\nexport const messages = defineMessages<Keys>({});",
+    "files": {
+      "keys.ts": "export type Keys = string;"
+    },
+    "expect": [
+      "define-messages-keys@3"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "renamed import",
+    "code": "import { defineMessages as messages } from \"react-intl\";\nexport const result = messages({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "namespace import",
+    "code": "import * as intl from \"react-intl\";\nexport const result = intl.defineMessages({});",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "other API",
+    "code": "import { defineMessages } from \"other\";\nexport const result = defineMessages({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "shadowed API",
+    "code": "import { defineMessages } from \"react-intl\";\nexport function run(defineMessages: Function) { return defineMessages({}); }",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "unconstrained generic",
+    "code": "import { defineMessages } from \"react-intl\";\nexport function run<T>() { return defineMessages<T>({}); }",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  }
+]
