@@ -1,0 +1,109 @@
+[
+ {
+  "rule": "no-widening-object-keys",
+  "name": "keys loses the key union",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const names = Object.keys(levels);\n",
+  "expect": [
+   "no-widening-object-keys@2"
+  ],
+  "messages": [
+   "`Object.keys`",
+   "typedKeys",
+   "concentrates the unsoundness"
+  ]
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "entries loses it in the first position",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const pairs = Object.entries(levels);\n",
+  "expect": [
+   "no-widening-object-keys@2"
+  ],
+  "messages": [
+   "`Object.entries`",
+   "typedEntries"
+  ]
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "values keeps the value type",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const numbers = Object.values(levels);\n",
+  "expect": []
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "a count reads no key",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const empty = Object.keys(levels).length === 0;\n",
+  "expect": []
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "a count on entries is the same case",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const size = Object.entries(levels).length;\n",
+  "expect": []
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "a mapped result still reads the keys",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const upper = Object.keys(levels).map((key) => key.toUpperCase());\n",
+  "expect": [
+   "no-widening-object-keys@2"
+  ]
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "a shadowed Object is not the global",
+  "code": "\nexport function read(Object: { keys: (value: unknown) => string[] }) {\n\treturn Object.keys({ off: 0 });\n}\n",
+  "expect": []
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "an imported Object is not the global",
+  "code": "\nimport Object from \"custom\";\n\nexport const names = Object.keys({ off: 0 });\n",
+  "expect": []
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "fromEntries is the other direction",
+  "code": "\nexport const built = Object.fromEntries([[\"off\", 0]]);\n",
+  "expect": []
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "the helper names come from the options",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const names = Object.keys(levels);\n",
+  "options": {
+   "keys": "objectKeysFrom"
+  },
+  "expect": [
+   "no-widening-object-keys@2"
+  ],
+  "messages": [
+   "objectKeysFrom"
+  ]
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "a computed access names the method too",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const names = Object[\"keys\"](levels);\n",
+  "expect": [
+   "no-widening-object-keys@2"
+  ]
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "a destructured declaration above the call is not the helper",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nexport const { names } = { names: Object.keys(levels) };\n",
+  "expect": [
+   "no-widening-object-keys@2"
+  ]
+ },
+ {
+  "rule": "no-widening-object-keys",
+  "name": "a computed method name above the call is not the helper",
+  "code": "\nconst levels = { off: 0, warn: 1 };\nconst key = \"list\";\nexport class Levels {\n\t[key]() {\n\t\treturn Object.keys(levels);\n\t}\n}\n",
+  "expect": [
+   "no-widening-object-keys@5"
+  ]
+ }
+]
