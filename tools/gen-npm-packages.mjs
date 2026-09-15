@@ -6,7 +6,14 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
-const npmPackageVersion = requiredEnvVar('TSGOLINT_VERSION');
+const repoRoot = path.join(import.meta.dirname, '..');
+
+// The published version is the one committed on the branch, never an input
+const npmPackageVersion = (await fs.readFile(path.join(repoRoot, 'VERSION'), 'utf8')).trim();
+assert.match(npmPackageVersion, /^\d+\.\d+\.\d+$/, 'VERSION must hold a plain semver');
+if (process.env.TSGOLINT_VERSION != null) {
+  assert.equal(process.env.TSGOLINT_VERSION, npmPackageVersion, 'TSGOLINT_VERSION differs from VERSION');
+}
 
 const MAIN_PACKAGE = '@block65/oxlint-tsgolint';
 
@@ -20,24 +27,32 @@ const GOARCH2PROCESS_ARCH = {
   arm64: 'arm64',
 };
 
-const binariesMatrix = Object.entries(GOOS2PROCESS_PLATFORM).flatMap(
-  ([goos, platform]) =>
-    Object.entries(GOARCH2PROCESS_ARCH).map(([goarch, arch]) => ({
-      goarch,
-      goos,
-      arch,
-      platform,
-      artifactName: `tsgolint-${goos}-${goarch}`,
-      npmPackageName: `${MAIN_PACKAGE}-${platform}-${arch}`,
-    })),
-);
+// Only the platforms Block65 uses; extend the release workflow matrix alongside
+const BUILT = [
+  ['linux', 'amd64'],
+  ['linux', 'arm64'],
+  ['darwin', 'arm64'],
+];
+
+const binariesMatrix = BUILT.map(([goos, goarch]) => {
+  const platform = GOOS2PROCESS_PLATFORM[goos];
+  const arch = GOARCH2PROCESS_ARCH[goarch];
+  return {
+    goarch,
+    goos,
+    arch,
+    platform,
+    artifactName: `tsgolint-${goos}-${goarch}`,
+    npmPackageName: `${MAIN_PACKAGE}-${platform}-${arch}`,
+  };
+});
 
 const commonPackageJson = {
   version: npmPackageVersion,
   description:
     'Block65 patched build of tsgolint 7.0.2001 (oxc-project/tsgolint) adding four type-aware rules, for use with @block65/oxlint. Not the oxc project.',
   license: 'MIT',
-  author: 'auvred <aauvred@gmail.com>',
+  author: 'Block65',
   repository: 'github:block65/tsgolint',
   bugs: 'https://github.com/block65/tsgolint/issues',
   homepage: 'https://github.com/block65/tsgolint#readme',
@@ -45,8 +60,6 @@ const commonPackageJson = {
     access: 'public',
   },
 };
-
-const repoRoot = path.join(import.meta.dirname, '..');
 
 const npmDir = path.join(repoRoot, 'npm');
 const licensePath = path.join(repoRoot, 'LICENSE');
@@ -122,8 +135,3 @@ await Promise.all([
   })(),
 ]);
 
-function requiredEnvVar(/** @type {string} */ name) {
-  const value = process.env[name];
-  assert.ok(value != null, `missing $${name} env variable`);
-  return value;
-}
