@@ -1,8 +1,6 @@
 # @block65/oxlint-tsgolint
 
-Block65 build of tsgolint 7.0.2001 with additional type-aware rules, for use with @block65/oxlint. Internal use.
-
-Source: https://github.com/block65/tsgolint, branch block65/v7.0.2001. Patch set listed in NOTICE. Upstream LICENSE applies.
+Fork of tsgolint 7.0.2001 with additional type-aware rules, used by @block65/oxlint. Block65 internal.
 
 ## Use
 
