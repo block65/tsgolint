@@ -1,14 +1,32 @@
-Block65 patched build of tsgolint 7.0.2001
-==========================================
-
-This package is built from https://github.com/block65/tsgolint, branch
-block65/v7.0.2001, a fork of https://github.com/oxc-project/tsgolint at tag
-v7.0.2001. Upstream tsgolint is the work of auvred and the oxc project
-contributors; their LICENSE and copyright apply unchanged. The fork adds, on
-top of the upstream tag: the checker shim exposes getUnionType,
-getStringLiteralType and undefinedType; four rules are added under
-internal/rules and registered in cmd/tsgolint (define-messages-keys,
-no-widening-alias, no-widening-object-keys, no-widening-return-type), ported
-from the block65 oxlint plugin; the npm packages are renamed to
-@block65/oxlint-tsgolint; and CI is reduced to a release workflow. It is
-maintained by Block65 and is not affiliated with or endorsed by the oxc project.
+Built from https://github.com/block65/tsgolint, branch block65/v7.0.2001, on oxc-project/tsgolint tag v7.0.2001.
+Upstream copyright and LICENSE apply.
+.github/workflows/release.yml
+CONTRIBUTING.md
+NOTICE
+README.md
+VERSION
+cmd/tsgolint/main.go
+internal/rule_tester/__snapshots__/define-messages-keys.snap
+internal/rule_tester/__snapshots__/no-widening-alias.snap
+internal/rule_tester/__snapshots__/no-widening-object-keys.snap
+internal/rule_tester/__snapshots__/no-widening-return-type.snap
+internal/rules/define_messages_keys/define_messages_keys.go
+internal/rules/define_messages_keys/define_messages_keys_test.go
+internal/rules/define_messages_keys/plugin_cases.json
+internal/rules/no_widening_alias/no_widening_alias.go
+internal/rules/no_widening_alias/no_widening_alias_test.go
+internal/rules/no_widening_alias/plugin_cases.json
+internal/rules/no_widening_object_keys/no_widening_object_keys.go
+internal/rules/no_widening_object_keys/no_widening_object_keys_test.go
+internal/rules/no_widening_object_keys/options.go
+internal/rules/no_widening_object_keys/plugin_cases.json
+internal/rules/no_widening_object_keys/schema.json
+internal/rules/no_widening_return_type/no_widening_return_type.go
+internal/rules/no_widening_return_type/no_widening_return_type_test.go
+internal/rules/no_widening_return_type/options.go
+internal/rules/no_widening_return_type/plugin_cases.json
+npm/core/bin/tsgolint.js
+package.json
+shim/checker/extra-shim.json
+shim/checker/shim.go
+tools/gen-npm-packages.mjs

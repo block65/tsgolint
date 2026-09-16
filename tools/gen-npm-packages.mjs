@@ -49,12 +49,10 @@ const binariesMatrix = BUILT.map(([goos, goarch]) => {
 const commonPackageJson = {
   version: npmPackageVersion,
   description:
-    'Block65 patched build of tsgolint 7.0.2001 (oxc-project/tsgolint) adding four type-aware rules, for use with @block65/oxlint. Not the oxc project.',
+    'Block65 build of tsgolint 7.0.2001 with additional type-aware rules. Internal use.',
   license: 'MIT',
   author: 'Block65',
   repository: 'github:block65/tsgolint',
-  bugs: 'https://github.com/block65/tsgolint/issues',
-  homepage: 'https://github.com/block65/tsgolint#readme',
   publishConfig: {
     access: 'public',
   },
