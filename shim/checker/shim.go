@@ -135,12 +135,12 @@ func Checker_getDeclaredTypeOfSymbol(recv *checker.Checker, symbol *ast.Symbol) 
 func Checker_getStringLiteralType(recv *checker.Checker, value string) *checker.Type
 //go:linkname Checker_getBaseTypeOfLiteralType github.com/microsoft/typescript-go/internal/checker.(*Checker).getBaseTypeOfLiteralType
 func Checker_getBaseTypeOfLiteralType(recv *checker.Checker, t *checker.Type) *checker.Type
+//go:linkname Checker_getUnionType github.com/microsoft/typescript-go/internal/checker.(*Checker).getUnionType
+func Checker_getUnionType(recv *checker.Checker, types []*checker.Type) *checker.Type
 //go:linkname Checker_getUnionTypeEx github.com/microsoft/typescript-go/internal/checker.(*Checker).getUnionTypeEx
 func Checker_getUnionTypeEx(recv *checker.Checker, types []*checker.Type, unionReduction checker.UnionReduction, alias *checker.TypeAlias, origin *checker.Type) *checker.Type
 //go:linkname Checker_getIndexedAccessTypeOrUndefined github.com/microsoft/typescript-go/internal/checker.(*Checker).getIndexedAccessTypeOrUndefined
 func Checker_getIndexedAccessTypeOrUndefined(recv *checker.Checker, objectType *checker.Type, indexType *checker.Type, accessFlags checker.AccessFlags, accessNode *ast.Node, alias *checker.TypeAlias) *checker.Type
-//go:linkname Checker_getUnionType github.com/microsoft/typescript-go/internal/checker.(*Checker).getUnionType
-func Checker_getUnionType(recv *checker.Checker, types []*checker.Type) *checker.Type
 //go:linkname Checker_getBaseConstraintOfType github.com/microsoft/typescript-go/internal/checker.(*Checker).getBaseConstraintOfType
 func Checker_getBaseConstraintOfType(recv *checker.Checker, t *checker.Type) *checker.Type
 //go:linkname Checker_removeDefinitelyFalsyTypes github.com/microsoft/typescript-go/internal/checker.(*Checker).removeDefinitelyFalsyTypes
