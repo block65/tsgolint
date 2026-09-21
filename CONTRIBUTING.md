@@ -1,7 +1,7 @@
 # Contributing
 
 This fork carries only the Block65 patch set listed in `NOTICE` on top of
-upstream tsgolint 7.0.2001. Changes to tsgolint itself belong upstream at
+upstream tsgolint 7.0.2002. Changes to tsgolint itself belong upstream at
 [oxc-project/tsgolint](https://github.com/oxc-project/tsgolint); please do not
 open them here. The four added rules are maintained in the
 [block65 oxlint plugin](https://github.com/block65/oxlint-plugin) repository
