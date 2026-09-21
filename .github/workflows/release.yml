@@ -105,11 +105,16 @@ jobs:
       - name: chmod +x
         run: find build -type f -name tsgolint -exec chmod +x {} \;
 
-      # The generator reads VERSION and refuses a differing TSGOLINT_VERSION
+      # The generator reads VERSION and refuses a differing TSGOLINT_VERSION.
+      # A dispatch carries the version in the input, a release in the tag, and
+      # an unset expression reaches the generator as "" rather than absent
       - name: Generate npm packages
         env:
-          TSGOLINT_VERSION: ${{ inputs.version || '' }}
-        run: node ./tools/gen-npm-packages.mjs
+          INPUT: ${{ inputs.version }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          export TSGOLINT_VERSION="${INPUT:-${TAG#v}}"
+          node ./tools/gen-npm-packages.mjs
 
       - name: Pack
         run: |
