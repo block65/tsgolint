@@ -1,7 +1,6 @@
 {
   "name": "tsgolint",
   "private": true,
-  "packageManager": "pnpm@11.24.0",
   "scripts": {
     "fmt": "dprint fmt"
   },
