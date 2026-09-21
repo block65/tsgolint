@@ -1,4 +1,4 @@
-Built from https://github.com/block65/tsgolint at tag v7.0.200200, on oxc-project/tsgolint tag v7.0.2002.
+Built from https://github.com/block65/tsgolint, tracking oxc-project/tsgolint main. Release tags name the upstream release they were cut from.
 Upstream copyright and LICENSE apply.
 .github/workflows/release.yml
 CONTRIBUTING.md
