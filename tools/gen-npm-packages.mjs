@@ -8,7 +8,8 @@ import process from 'node:process';
 
 const repoRoot = path.join(import.meta.dirname, '..');
 
-// The published version is the one committed on the branch, never an input
+// The published version is the one committed in VERSION, never an input. main
+// holds 0.0.0; the release commit sets the real one before the tag is cut
 const npmPackageVersion = (await fs.readFile(path.join(repoRoot, 'VERSION'), 'utf8')).trim();
 assert.match(npmPackageVersion, /^\d+\.\d+\.\d+$/, 'VERSION must hold a plain semver');
 if (process.env.TSGOLINT_VERSION != null) {
@@ -49,7 +50,7 @@ const binariesMatrix = BUILT.map(([goos, goarch]) => {
 const commonPackageJson = {
   version: npmPackageVersion,
   description:
-    'Block65 build of tsgolint 7.0.2002 with additional type-aware rules.',
+    'Block65 build of tsgolint with additional type-aware rules.',
   license: 'MIT',
   author: 'Block65',
   repository: 'github:block65/tsgolint',
