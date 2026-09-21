@@ -1,8 +1,10 @@
 # @block65/oxlint-tsgolint
 
-tsgolint 7.0.2002 with the four type-aware rules that @block65/oxlint exposes
-under `typescript/`. The rules are only reachable through that build, whose
-README lists them and gives the override pair. Linux x64 and arm64 only.
+tsgolint with the four type-aware rules that @block65/oxlint exposes under
+`typescript/`. The rules are only reachable through @block65/oxlint, whose
+README describes them and declares the oldest build of this package they work
+with. Linux x64 and arm64 only, the platforms Block65 runs. The package
+version names the upstream release it is built on, as described below.
 
 ## Versioning
 

@@ -1,20 +1,44 @@
 # Contributing
 
-This fork carries only the Block65 patch set listed in `NOTICE` on top of
-upstream tsgolint 7.0.2002. Changes to tsgolint itself belong upstream at
-[oxc-project/tsgolint](https://github.com/oxc-project/tsgolint); please do not
-open them here. The four added rules are maintained in the
-[block65 oxlint plugin](https://github.com/block65/oxlint-plugin) repository
-under `native/patches`, which is the source of truth for this branch; the
-rebase procedure for the next upstream bump lives there too.
+The fork's changes are the files listed in `NOTICE`, which is maintained by
+hand: a fork commit that touches a file not yet listed adds it. Anything
+outside that list belongs upstream at
+[oxc-project/tsgolint](https://github.com/oxc-project/tsgolint). The four
+added rules live in `internal/rules/` here, and
+[block65/oxc](https://github.com/block65/oxc) carries their oxlint-side stubs
+and describes them.
 
-To build from a clean clone:
+`main` is a stack of fork commits rebased onto upstream `main`, so it reads as
+ahead of upstream and never behind:
 
 ```sh
-git submodule update --init
-(cd typescript-go && git am --3way --no-gpg-sign ../patches/*.patch)
-mkdir -p internal/collections
-find ./typescript-go/internal/collections -type f ! -name '*_test.go' -exec cp {} internal/collections/ \;
-go build -ldflags="-s -w" -trimpath -o tsgolint ./cmd/tsgolint
+git fetch https://github.com/oxc-project/tsgolint.git main
+git rebase FETCH_HEAD
+git push --force-with-lease
+```
+
+Files the fork deletes (`AGENTS.md`, upstream CI) that upstream has since
+edited are resolved with `git rm`.
+
+`main` holds `0.0.0` in `VERSION`. A release is the stack replayed onto the
+upstream release tag plus one commit that sets `VERSION`:
+
+```sh
+git fetch https://github.com/oxc-project/tsgolint.git main
+base=$(git merge-base main FETCH_HEAD)
+git fetch https://github.com/oxc-project/tsgolint.git tag v[upstream]
+git checkout --detach main
+git rebase --onto v[upstream] "$base"
+```
+
+The version is upstream's patch times 100 plus a build number, as the README
+describes. Tag the version commit `v[version]` and publish a GitHub release
+against the tag, which runs `deploy.yml`. Release tags are not on `main`'s
+history.
+
+`just init` and `just build` set up and build a clean clone. `just test` also
+runs upstream's e2e suite; the fork's own tests are:
+
+```sh
 go test ./internal/rules/define_messages_keys ./internal/rules/no_widening_alias ./internal/rules/no_widening_object_keys ./internal/rules/no_widening_return_type
 ```

@@ -1,4 +1,4 @@
-Built from https://github.com/block65/tsgolint, tracking oxc-project/tsgolint main. Release tags name the upstream release they were cut from.
+Built from https://github.com/block65/tsgolint, tracking oxc-project/tsgolint main. Release tag versions derive from the upstream release they were cut from.
 Upstream copyright and LICENSE apply.
 .github/workflows/deploy.yml
 CONTRIBUTING.md
