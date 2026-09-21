@@ -53,6 +53,9 @@ const commonPackageJson = {
   license: 'MIT',
   author: 'Block65',
   repository: 'github:block65/tsgolint',
+  // npm fills bugs in from repository when it is absent, and issues are off
+  // on this repo, so an explicit value keeps the registry off a dead link
+  bugs: { url: 'https://github.com/block65/tsgolint#readme' },
   publishConfig: {
     access: 'public',
   },
