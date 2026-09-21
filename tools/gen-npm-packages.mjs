@@ -49,7 +49,7 @@ const binariesMatrix = BUILT.map(([goos, goarch]) => {
 const commonPackageJson = {
   version: npmPackageVersion,
   description:
-    'Block65 build of tsgolint 7.0.2002 with additional type-aware rules. Internal use.',
+    'Block65 build of tsgolint 7.0.2002 with additional type-aware rules.',
   license: 'MIT',
   author: 'Block65',
   repository: 'github:block65/tsgolint',
