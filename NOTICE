@@ -1,4 +1,4 @@
-Built from https://github.com/block65/tsgolint, branch block65/main, on oxc-project/tsgolint tag v7.0.2002.
+Built from https://github.com/block65/tsgolint at tag v7.0.200200, on oxc-project/tsgolint tag v7.0.2002.
 Upstream copyright and LICENSE apply.
 .github/workflows/release.yml
 CONTRIBUTING.md
