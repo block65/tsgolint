@@ -1,0 +1,117 @@
+
+[TestPluginCases/a_destructuring_default_in_a_loop_head/invalid-0 - 1]
+Diagnostic 1: placeholder (2:15 - 2:27)
+Message: A `= "anon"` placeholder for a missing `name` usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(rows: { name?: string }[]) {
+   2 |     for (const { name = "anon" } of rows) {
+     |                  ~~~~~~~~~~~~~
+   3 |         console.log(name);
+---
+
+[TestPluginCases/a_literal_outside_the_union_invents_a_value/invalid-0 - 1]
+Diagnostic 1: placeholder (2:23 - 2:38)
+Message: A `"trace"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | declare const level: "debug" | "info" | undefined;
+   2 | export const chosen = level ?? "trace";
+     |                       ~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/a_nested_destructuring_default/invalid-0 - 1]
+Diagnostic 1: placeholder (3:11 - 3:23)
+Message: A `= "anon"` placeholder for a missing `name` usually just fails later, in validation. Make the value required, or handle its absence here.
+   2 |     const {
+   3 |         meta: { name = "anon" } = {},
+     |                 ~~~~~~~~~~~~~
+   4 |     } = row;
+---
+
+[TestPluginCases/a_nullish_assignment/invalid-0 - 1]
+Diagnostic 1: placeholder (2:2 - 2:34)
+Message: A `"unknown_service"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(row: { service?: string }) {
+   2 |     row.service ??= "unknown_service";
+     |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   3 | }
+---
+
+[TestPluginCases/a_parenthesised_or_asserted_literal_is_still_a_literal/invalid-0 - 1]
+Diagnostic 1: placeholder (2:9 - 2:38)
+Message: A `"gate"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(row: { name?: string }) {
+   2 |     return row.name ?? ("gate" as string);
+     |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   3 | }
+---
+
+[TestPluginCases/a_string_literal_filling_an_open_string/invalid-0 - 1]
+Diagnostic 1: placeholder (2:21 - 2:50)
+Message: A `"conformance-tenant"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | declare const tenant: string | undefined;
+   2 | export const name = tenant ?? "conformance-tenant";
+     |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/a_string_literal_filling_an_optional_property/invalid-0 - 1]
+Diagnostic 1: placeholder (2:9 - 2:40)
+Message: A `"unknown_service"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(row: { service?: string }) {
+   2 |     return row.service ?? "unknown_service";
+     |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   3 | }
+---
+
+[TestPluginCases/a_template_literal_without_expressions/invalid-0 - 1]
+Diagnostic 1: placeholder (2:9 - 2:26)
+Message: A ``gate`` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(row: { name?: string }) {
+   2 |     return row.name ?? `gate`;
+     |            ~~~~~~~~~~~~~~~~~~
+   3 | }
+---
+
+[TestPluginCases/an_object_destructuring_default_on_an_open_string/invalid-0 - 1]
+Diagnostic 1: placeholder (2:10 - 2:25)
+Message: A `= "unknown"` placeholder for a missing `name` usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(row: { name?: string }) {
+   2 |     const { name = "unknown" } = row;
+     |             ~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/an_open_string_among_other_types/invalid-0 - 1]
+Diagnostic 1: placeholder (2:20 - 2:31)
+Message: A `"none"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | declare const id: string | number | undefined;
+   2 | export const key = id ?? "none";
+     |                    ~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/array_destructuring_defaults/invalid-0 - 1]
+Diagnostic 1: placeholder (2:15 - 2:30)
+Message: A `= "0"` placeholder for a missing `iterations` usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(serialised: string) {
+   2 |     const [, , , iterations = "0", saltHex = ""] = serialised.split("$");
+     |                  ~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/the_destructuring_report_names_the_binding/invalid-0 - 1]
+Diagnostic 1: placeholder (2:9 - 2:24)
+Message: A `= "0"` placeholder for a missing `iterations` usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(serialised: string) {
+   2 |     const [iterations = "0"] = serialised.split("$");
+     |            ~~~~~~~~~~~~~~~~
+   3 | 
+---
+
+[TestPluginCases/the_report_names_the_placeholder/invalid-0 - 1]
+Diagnostic 1: placeholder (2:9 - 2:26)
+Message: A `"gate"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here.
+   1 | export function run(row: { name?: string }) {
+   2 |     return row.name ?? "gate";
+     |            ~~~~~~~~~~~~~~~~~~
+   3 | }
+---

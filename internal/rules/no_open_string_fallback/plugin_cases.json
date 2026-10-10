@@ -1,0 +1,160 @@
+[
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a string literal filling an open string",
+    "code": "\ndeclare const tenant: string | undefined;\nexport const name = tenant ?? \"conformance-tenant\";\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a string literal filling an optional property",
+    "code": "\nexport function run(row: { service?: string }) {\n\treturn row.service ?? \"unknown_service\";\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a member of the literal union chooses a default",
+    "code": "\ndeclare const level: \"debug\" | \"info\" | undefined;\nexport const chosen = level ?? \"debug\";\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a literal outside the union invents a value",
+    "code": "\ndeclare const level: \"debug\" | \"info\" | undefined;\nexport const chosen = level ?? \"trace\";\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a named value is a typed default",
+    "code": "\nconst DEFAULT_SERVICE = \"api\";\ndeclare const config: { service?: string };\nexport const service = config.service ?? DEFAULT_SERVICE;\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a nullish assignment",
+    "code": "\nexport function run(row: { service?: string }) {\n\trow.service ??= \"unknown_service\";\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a template literal without expressions",
+    "code": "\nexport function run(row: { name?: string }) {\n\treturn row.name ?? `gate`;\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a template literal with expressions is computed",
+    "code": "\nexport function run(row: { name?: string }, id: string) {\n\treturn row.name ?? `service-${id}`;\n}\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "an empty string belongs to the plugin rule",
+    "code": "\nexport function run(row: { name?: string }) {\n\treturn row.name ?? \"\";\n}\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a parenthesised or asserted literal is still a literal",
+    "code": "\nexport function run(row: { name?: string }) {\n\treturn row.name ?? (\"gate\" as string);\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "an open string among other types",
+    "code": "\ndeclare const id: string | number | undefined;\nexport const key = id ?? \"none\";\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "an unresolved left operand",
+    "code": "\ndeclare const loose: any;\ndeclare const opaque: unknown;\nexport const pair = [loose ?? \"x\", opaque ?? \"y\"];\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a generic left operand",
+    "code": "\nexport function pick<T extends string>(value: T | undefined) {\n\treturn value ?? \"fallback\";\n}\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "array destructuring defaults",
+    "code": "\nexport function run(serialised: string) {\n\tconst [, , , iterations = \"0\", saltHex = \"\"] = serialised.split(\"$\");\n\n\treturn { iterations, saltHex };\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "an object destructuring default on an open string",
+    "code": "\nexport function run(row: { name?: string }) {\n\tconst { name = \"unknown\" } = row;\n\n\treturn name;\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "an object destructuring default from the literal union",
+    "code": "\nexport function run(options: { level?: \"debug\" | \"info\" }) {\n\tconst { level = \"debug\" } = options;\n\n\treturn level;\n}\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a nested destructuring default",
+    "code": "\nexport function run(row: { meta?: { name?: string } }) {\n\tconst {\n\t\tmeta: { name = \"anon\" } = {},\n\t} = row;\n\n\treturn name;\n}\n",
+    "expect": [
+      "no-open-string-fallback@3"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a destructuring default in a loop head",
+    "code": "\nexport function run(rows: { name?: string }[]) {\n\tfor (const { name = \"anon\" } of rows) {\n\t\tconsole.log(name);\n\t}\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "a parameter default is the function's documented choice",
+    "code": "\nexport function run(name = \"anon\") {\n\treturn name;\n}\n\nexport function list({ level = \"debug\" }: { level?: string }) {\n\treturn level;\n}\n\nexport const first = ([head = \"none\"]: string[]) => head;\n",
+    "expect": []
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "the report names the placeholder",
+    "code": "\nexport function run(row: { name?: string }) {\n\treturn row.name ?? \"gate\";\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ],
+    "messages": [
+      "A `\"gate\"` placeholder for a missing value usually just fails later, in validation. Make the value required, or handle its absence here."
+    ]
+  },
+  {
+    "rule": "no-open-string-fallback",
+    "name": "the destructuring report names the binding",
+    "code": "\nexport function run(serialised: string) {\n\tconst [iterations = \"0\"] = serialised.split(\"$\");\n\n\treturn iterations;\n}\n",
+    "expect": [
+      "no-open-string-fallback@2"
+    ],
+    "messages": [
+      "A `= \"0\"` placeholder for a missing `iterations`"
+    ]
+  }
+]
