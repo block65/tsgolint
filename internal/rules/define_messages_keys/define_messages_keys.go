@@ -49,17 +49,51 @@ func definesMessages(ctx rule.RuleContext, expression *ast.Node) bool {
 	return false
 }
 
-func stringKeys(t *checker.Type) bool {
+func literalKeys(t *checker.Type) bool {
 	parts := utils.UnionTypeParts(t)
 	if len(parts) == 0 {
 		return false
 	}
 	for _, part := range parts {
-		if !utils.IsTypeFlagSet(part, checker.TypeFlagsStringLiteral) {
+		if !utils.IsTypeFlagSet(part, checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral) {
 			return false
 		}
 	}
 	return true
+}
+
+// inferredKeys reports whether the call resolved to an overload with a
+// `const` type parameter, such as react-intl 12's
+// `defineMessages<const D extends Record<string, MessageDescriptor>>`, and
+// passes an object whose keys are all known. Such a call keeps the literal
+// keys without a type argument, and adding one would select a legacy overload.
+func inferredKeys(ctx rule.RuleContext, node *ast.Node) bool {
+	call := node.AsCallExpression()
+	if call.Arguments == nil || len(call.Arguments.Nodes) == 0 {
+		return false
+	}
+	signature := checker.Checker_getResolvedSignature(ctx.TypeChecker, node, nil, checker.CheckModeNormal)
+	if signature == nil {
+		return false
+	}
+	declaration := checker.Signature_declaration(signature)
+	if declaration == nil {
+		return false
+	}
+	constGeneric := false
+	for _, parameter := range declaration.TypeParameters() {
+		if ast.HasSyntacticModifier(parameter, ast.ModifierFlagsConst) {
+			constGeneric = true
+			break
+		}
+	}
+	if !constGeneric {
+		return false
+	}
+	argument := ctx.TypeChecker.GetTypeAtLocation(call.Arguments.Nodes[0])
+	return argument != nil &&
+		utils.IsTypeFlagSet(argument, checker.TypeFlagsObject) &&
+		len(checker.Checker_getIndexInfosOfType(ctx.TypeChecker, argument)) == 0
 }
 
 var DefineMessagesKeysRule = rule.Rule{
@@ -75,15 +109,18 @@ var DefineMessagesKeysRule = rule.Rule{
 				if call.TypeArguments != nil && len(call.TypeArguments.Nodes) > 0 {
 					key = call.TypeArguments.Nodes[0]
 				}
-				if key != nil && stringKeys(checker.Checker_getTypeFromTypeNode(ctx.TypeChecker, key)) {
+				if key != nil && literalKeys(checker.Checker_getTypeFromTypeNode(ctx.TypeChecker, key)) {
 					return
 				}
 				if key == nil {
+					if inferredKeys(ctx, node) {
+						return
+					}
 					key = node
 				}
 				ctx.ReportNode(key, rule.RuleMessage{
 					Id:          "finiteKeys",
-					Description: "Give `defineMessages` an explicit finite union of string literals, such as `defineMessages<MessageKey>(...)`. Broad, numeric, unresolved, and unconstrained generic types are not message keys.",
+					Description: "Give `defineMessages` an explicit finite union of string or number literals, such as `defineMessages<MessageKey>(...)`, or pass an object literal to an overload that keeps its keys with a `const` type parameter. Broad, unresolved, and unconstrained generic types are not message keys.",
 				})
 			},
 		}
