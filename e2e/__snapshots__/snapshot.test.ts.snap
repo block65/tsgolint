@@ -1670,6 +1670,19 @@ exports[`TSGoLint E2E Snapshot Tests > should generate consistent diagnostics sn
     "rule": "no-unnecessary-type-assertion",
   },
   {
+    "file_path": "fixtures/basic/rules/no-unnecessary-type-assertion/index.ts",
+    "kind": 0,
+    "message": {
+      "description": "Return type \`string\` is wider than the \`"hello"\` the body returns, so every caller loses that. Annotate the narrower type, or drop the annotation and let it infer.",
+      "id": "widenedReturn",
+    },
+    "range": {
+      "end": 199,
+      "pos": 193,
+    },
+    "rule": "no-widening-return-type",
+  },
+  {
     "file_path": "fixtures/basic/rules/no-unnecessary-type-conversion/index.ts",
     "kind": 0,
     "labeled_ranges": [
