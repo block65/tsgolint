@@ -117,6 +117,18 @@
     },
     {
         "rule": "no-widening-return-type",
+        "name": "void is the contract for a body that only returns bare",
+        "code": "\nexport function stop(done: boolean): void {\n\tif (done) {\n\t\treturn;\n\t}\n\tconsole.log(\"running\");\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
+        "name": "Promise<void> is the same contract for an async body",
+        "code": "\nexport async function stop(): Promise<void> {\n\treturn;\n}\n",
+        "expect": []
+    },
+    {
+        "rule": "no-widening-return-type",
         "name": "a nested function keeps its own annotation",
         "code": "\nexport function outer(): string {\n\tconst inner = (): boolean => true;\n\n\treturn String(inner());\n}\n",
         "expect": [

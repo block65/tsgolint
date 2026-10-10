@@ -143,7 +143,9 @@ var NoWideningReturnTypeRule = rule.Rule{
 			}
 
 			declared := unwrap(checker.Checker_getTypeFromTypeNode(ctx.TypeChecker, annotation))
-			if declared == nil || unresolved(declared) {
+			// `void` says the function returns nothing meaningful, which is the
+			// contract for a body of bare returns, not a wider `undefined`.
+			if declared == nil || unresolved(declared) || utils.IsTypeFlagSet(declared, checker.TypeFlagsVoid) {
 				return
 			}
 			actual := checker.Checker_getUnionType(ctx.TypeChecker, returned)
