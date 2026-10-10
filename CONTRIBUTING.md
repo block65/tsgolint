@@ -3,7 +3,7 @@
 The fork's changes are the files listed in `NOTICE`, which is maintained by
 hand: a fork commit that touches a file not yet listed adds it. Anything
 outside that list belongs upstream at
-[oxc-project/tsgolint](https://github.com/oxc-project/tsgolint). The four
+[oxc-project/tsgolint](https://github.com/oxc-project/tsgolint). The five
 added rules live in `internal/rules/` here, and
 [block65/oxc](https://github.com/block65/oxc) carries their oxlint-side stubs
 and describes them.
@@ -40,5 +40,5 @@ history.
 runs upstream's e2e suite; the fork's own tests are:
 
 ```sh
-go test ./internal/rules/define_messages_keys ./internal/rules/no_widening_alias ./internal/rules/no_widening_object_keys ./internal/rules/no_widening_return_type
+go test ./internal/rules/define_messages_keys ./internal/rules/no_open_string_fallback ./internal/rules/no_widening_alias ./internal/rules/no_widening_object_keys ./internal/rules/no_widening_return_type
 ```
