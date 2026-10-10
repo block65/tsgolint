@@ -7,12 +7,16 @@ README.md
 VERSION
 cmd/tsgolint/main.go
 internal/rule_tester/__snapshots__/define-messages-keys.snap
+internal/rule_tester/__snapshots__/no-open-string-fallback.snap
 internal/rule_tester/__snapshots__/no-widening-alias.snap
 internal/rule_tester/__snapshots__/no-widening-object-keys.snap
 internal/rule_tester/__snapshots__/no-widening-return-type.snap
 internal/rules/define_messages_keys/define_messages_keys.go
 internal/rules/define_messages_keys/define_messages_keys_test.go
 internal/rules/define_messages_keys/plugin_cases.json
+internal/rules/no_open_string_fallback/no_open_string_fallback.go
+internal/rules/no_open_string_fallback/no_open_string_fallback_test.go
+internal/rules/no_open_string_fallback/plugin_cases.json
 internal/rules/no_widening_alias/no_widening_alias.go
 internal/rules/no_widening_alias/no_widening_alias_test.go
 internal/rules/no_widening_alias/plugin_cases.json
