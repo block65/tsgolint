@@ -49,11 +49,9 @@
   },
   {
     "rule": "define-messages-keys",
-    "name": "reject 1 | 2",
+    "name": "accept 1 | 2",
     "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages<1 | 2>({});",
-    "expect": [
-      "define-messages-keys@2"
-    ]
+    "expect": []
   },
   {
     "rule": "define-messages-keys",
@@ -183,6 +181,63 @@
     "rule": "define-messages-keys",
     "name": "unconstrained generic",
     "code": "import { defineMessages } from \"react-intl\";\nexport function run<T>() { return defineMessages<T>({}); }",
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "accept numeric enum union",
+    "code": "import { defineMessages } from \"react-intl\";\nenum Status { Ok = 0, Cancelled = 1 }\nexport const messages = defineMessages<Status>({});",
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "accept const generic overload",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages({ owner: { defaultMessage: \"Owner\" }, \"quota-exceeded\": { defaultMessage: \"Quota\" } });",
+    "files": {
+      "node_modules/react-intl/index.d.ts": "export interface MessageDescriptor { id?: string; description?: string; defaultMessage?: string; }\nexport declare function defineMessages<V extends Record<string, unknown> = never>(messages: [NoInfer<V>] extends [never] ? never : { [K in keyof NoInfer<V>]: MessageDescriptor }): { readonly [K in keyof NoInfer<V>]: MessageDescriptor };\nexport declare function defineMessages<const D extends Record<string, MessageDescriptor>>(messages: D): { readonly [K in keyof D]: Readonly<D[K]> };\nexport declare function defineMessages<K extends keyof any, T = MessageDescriptor, U extends Record<K, T> = Record<K, T>>(messages: U): { readonly [P in keyof U]: Readonly<U[P]> };\n"
+    },
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "accept const generic overload through a namespace",
+    "code": "import * as intl from \"react-intl\";\nexport const messages = intl.defineMessages({ owner: { defaultMessage: \"Owner\" } });",
+    "files": {
+      "node_modules/react-intl/index.d.ts": "export interface MessageDescriptor { id?: string; description?: string; defaultMessage?: string; }\nexport declare function defineMessages<V extends Record<string, unknown> = never>(messages: [NoInfer<V>] extends [never] ? never : { [K in keyof NoInfer<V>]: MessageDescriptor }): { readonly [K in keyof NoInfer<V>]: MessageDescriptor };\nexport declare function defineMessages<const D extends Record<string, MessageDescriptor>>(messages: D): { readonly [K in keyof D]: Readonly<D[K]> };\nexport declare function defineMessages<K extends keyof any, T = MessageDescriptor, U extends Record<K, T> = Record<K, T>>(messages: U): { readonly [P in keyof U]: Readonly<U[P]> };\n"
+    },
+    "expect": []
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject const generic overload with broad keys",
+    "code": "import { defineMessages } from \"react-intl\";\ndeclare const all: Record<string, { defaultMessage: string }>;\nexport const messages = defineMessages(all);",
+    "files": {
+      "node_modules/react-intl/index.d.ts": "export interface MessageDescriptor { id?: string; description?: string; defaultMessage?: string; }\nexport declare function defineMessages<V extends Record<string, unknown> = never>(messages: [NoInfer<V>] extends [never] ? never : { [K in keyof NoInfer<V>]: MessageDescriptor }): { readonly [K in keyof NoInfer<V>]: MessageDescriptor };\nexport declare function defineMessages<const D extends Record<string, MessageDescriptor>>(messages: D): { readonly [K in keyof D]: Readonly<D[K]> };\nexport declare function defineMessages<K extends keyof any, T = MessageDescriptor, U extends Record<K, T> = Record<K, T>>(messages: U): { readonly [P in keyof U]: Readonly<U[P]> };\n"
+    },
+    "expect": [
+      "define-messages-keys@3"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject const generic overload with a generic argument",
+    "code": "import { defineMessages } from \"react-intl\";\nexport function run<T extends Record<string, { defaultMessage: string }>>(all: T) { return defineMessages(all); }",
+    "files": {
+      "node_modules/react-intl/index.d.ts": "export interface MessageDescriptor { id?: string; description?: string; defaultMessage?: string; }\nexport declare function defineMessages<V extends Record<string, unknown> = never>(messages: [NoInfer<V>] extends [never] ? never : { [K in keyof NoInfer<V>]: MessageDescriptor }): { readonly [K in keyof NoInfer<V>]: MessageDescriptor };\nexport declare function defineMessages<const D extends Record<string, MessageDescriptor>>(messages: D): { readonly [K in keyof D]: Readonly<D[K]> };\nexport declare function defineMessages<K extends keyof any, T = MessageDescriptor, U extends Record<K, T> = Record<K, T>>(messages: U): { readonly [P in keyof U]: Readonly<U[P]> };\n"
+    },
+    "expect": [
+      "define-messages-keys@2"
+    ]
+  },
+  {
+    "rule": "define-messages-keys",
+    "name": "reject legacy overload without a type argument",
+    "code": "import { defineMessages } from \"react-intl\";\nexport const messages = defineMessages({ owner: { defaultMessage: \"Owner\" } });",
+    "files": {
+      "node_modules/react-intl/index.d.ts": "export interface MessageDescriptor { id?: string; description?: string; defaultMessage?: string; }\nexport declare function defineMessages<K extends keyof any, T = MessageDescriptor, U extends Record<K, T> = Record<K, T>>(messages: U): { readonly [P in keyof U]: Readonly<U[P]> };\n"
+    },
     "expect": [
       "define-messages-keys@2"
     ]
