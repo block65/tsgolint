@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/typescript-eslint/tsgolint/internal/rules/define_messages_keys"
+	"github.com/typescript-eslint/tsgolint/internal/rules/no_open_string_fallback"
 	"github.com/typescript-eslint/tsgolint/internal/rules/no_widening_alias"
 	"github.com/typescript-eslint/tsgolint/internal/rules/no_widening_object_keys"
 	"github.com/typescript-eslint/tsgolint/internal/rules/no_widening_return_type"
@@ -169,6 +170,7 @@ var allRules = []rule.Rule{
 	no_widening_alias.NoWideningAliasRule,
 	no_widening_object_keys.NoWideningObjectKeysRule,
 	define_messages_keys.DefineMessagesKeysRule,
+	no_open_string_fallback.NoOpenStringFallbackRule,
 	await_thenable.AwaitThenableRule,
 	consistent_return.ConsistentReturnRule,
 	consistent_type_exports.ConsistentTypeExportsRule,
